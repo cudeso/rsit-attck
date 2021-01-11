@@ -41,15 +41,13 @@ def print_entries(data, outfile):
             a = t.get('attck', '')
             attck = ""
             for el in a:
-                if re.match(r'^TA\d{4} -',el):
-                    # Tactic
-                    attck = "%s[%s](https://attack.mitre.org/tactics/%s/)<br><br>" %(attck, el, el.split("-")[0].strip())
-                elif re.match(r'^T\d{4} -',el):
-                    # Technique
-                    attck = "%s[%s](https://attack.mitre.org/techniques/%s/)<br><br>" %(attck, el, el.split("-")[0].strip())
-                elif re.match(r'^T\d{4}/\d{3} -',el):
-                    # SubTechnique
-                    attck = "%s[%s](https://attack.mitre.org/techniques/%s/)<br><br>" %(attck, el, el.split("-")[0].strip())                    
+                if 'MITRE' in el:
+                    if re.match(r'^T\d{4} -',el['MITRE']):
+                        # Technique
+                        attck = "%s[%s](https://attack.mitre.org/techniques/%s/)<br><br>" %(attck, el['MITRE'], el['MITRE'].split("-")[0].strip())
+                    elif re.match(r'^T\d{4}/\d{3} -',el['MITRE']):
+                        # SubTechnique
+                        attck = "%s[%s](https://attack.mitre.org/techniques/%s/)<br><br>" %(attck, el['MITRE'], el['MITRE'].split("-")[0].strip())
             f.write('| %s | %s | %s | %s |' %(predicates[entry['predicate']], t['expanded'], attck, d))
             f.write("\n")
 
@@ -61,6 +59,3 @@ if __name__ == '__main__':
             print_header(data, outfile)
             print_entries(data, outfile)
 
-    except Exception as ex:
-        print("could not open or parse json input file. Reason: %s" %str(ex))
-        sys.exit(-2)    
