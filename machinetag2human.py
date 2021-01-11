@@ -26,7 +26,7 @@ def print_header(data, outfile):
 
 Generated from machine readable version. Please **DO NOT** edit this file directly in github, rather use the machinetag.json file.
 
-| Classification | Incident examples | ATT&CK Tactic / Technique     | Description        |
+| Classification | Incident examples | ATT&CK Technique              | Description        |
 |----------------|-------------------| ------------------------------|--------------------|""")
     f.write("\n")
 
